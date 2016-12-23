@@ -201,9 +201,10 @@ Department of Molecular Epidemiology, Leiden University Medical Center\\
 
 \begin{abstract}
 In this paper, we introduce a package for semi-supervised learning research in the R programming language called RSSL. We cover the purpose of the package, the methods it includes and comment on their use and implementation. We then show, using several code examples, how the package can be used to replicate well-known results from the semi-supervised learning literature.
+\keywords{Semi-supervised Learning, Reproducibility, Pattern Recognition, R}
 \end{abstract}
 
-\keywords{Semi-supervised Learning, Reproducibility, Pattern Recognition, R}
+
 
 
 
@@ -212,7 +213,7 @@ Semi-supervised learning is concerned with using unlabeled examples, that is, ex
 
 While the R programming language \cite{RCoreTeam2016} offers a rich set of implementations of a plethora of supervised learning methods, brought together by machine learning packages such as \texttt{caret} and \texttt{mlr} there are fewer implementations of methods that can deal with the semi-supervised learning setting. This both impedes the spread of the use of these types of algorithms by practitioners, and makes it harder for researchers to study these approaches or compare new methods to existing ones.  The goal of the RSSL package is to make a step towards filling this hiatus, with a focus on providing methods that exemplify common behaviours of semi-supervised learning methods.
 
-Until recently, no package providing multiple semi-supervised learning methods was available in R\footnote{Recently the \texttt{SSL} package was introduced whose implementations are mostly complementary to those offered in our package \url{https://CRAN.R-project.org/package=SSL}}. In other languages, semi-supervised learning libraries that bring together several different methods are not available either, although there are general purpose machine learning libraries, such as scikit-learn in Python \cite{scikit-learn} offer implementations of some semi-supervised algorithms. A broader set of implementations is available for Matlab, since the original implementations provided by the authors of many of the approaches covered by our package are provided for Matlab. The goal of our package is to bring some of these implementations together in the R environment by providing common interfaces to these methods, either implementing these methods in R, translating code to R or providing interfaces to C++ libraries.
+Until recently, no package providing multiple semi-supervised learning methods was available in R\footnote{Recently, the \texttt{SSL} package was introduced whose implementations are mostly complementary to those offered in our package: \url{https://CRAN.R-project.org/package=SSL}}. In other languages, semi-supervised learning libraries that bring together several different methods are not available either, although there are general purpose machine learning libraries, such as scikit-learn in Python \cite{scikit-learn} that offer implementations of some semi-supervised algorithms. A broader set of implementations is available for Matlab, since the original implementations provided by the authors of many of the approaches covered by our package are provided for Matlab. The goal of our package is to bring some of these implementations together in the R environment by providing common interfaces to these methods, either implementing these methods in R, translating code to R or providing interfaces to C++ libraries.
 
 The goal of this work is to give an overview of the package and make some comments how it is implemented and how it can be used. We will then provide several examples on how the package can be used to replicate various well-known results from the semi-supervised learning literature.
 
@@ -280,7 +281,7 @@ In addition to the implementations of the classifiers themselves, the package in
 A number of functions, of the form \texttt{generate*}, create datasets sampled from archetypical simulated problems. An overview of simulated datasets is given in \Cref{fig:generateddatasets}. You will notice that these datasets mostly show examples where the structure of the density of the feature values is either very informative or not informative at all for the estimation of the conditional distribution of the labels given the feature value. A major theme in semi-supervised learning research is how to leverage this connection between the distribution of the features and the conditional distribution of the labels, and what happens if this connection is non-existent. These simulated datasets offer some simple but interesting test cases for semi-supervised methods.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/generateddatasets-1} \caption[Simulated Datasets]{Simulated Datasets. Each can be generated using a function of the form \texttt{generate*}, where \texttt{*} should be replaced by the name of the dataset. (alt) indicates non-default parameters where used when calling the function.}\label{fig:generateddatasets}
+\includegraphics[width=\maxwidth]{figure/generateddatasets-1} \caption[Simulated Datasets]{Simulated Datasets. Each can be generated using a function of the form \texttt{generate*}, where \texttt{*} should be replaced by the name of the dataset. (alt) indicates non-default parameters were used when calling the function.}\label{fig:generateddatasets}
 \end{figure}
 
 
@@ -315,10 +316,10 @@ The package is available from the Comprehensive R Archive Network (CRAN). As suc
 \end{knitrout}
 
 \section{Examples}
-In this section, we will provide several examples of how the RSSL package can be used to illustrate or replicate results from the semi-supervised learning literature. Due to space constraints, we provide parts of the code for the examples in the text below. The complete code for all examples can be found in the source version of this document, which can be found in the supplementary material or the author's website.
+In this section, we will provide several examples of how the RSSL package can be used to illustrate or replicate results from the semi-supervised learning literature. Due to space constraints, we provide parts of the code for the examples in the text below. The complete code for all examples can be found in the source version of this document, which can be found on the author's website\footnote{\url{www.jessekrijthe.com}}.
 
 \subsection{A Failure of Self-Learning}
-While semi-supervised learning may seem to be obviously helpful, the fact that semi-supervised methods can actually lead to worse performance than their semi-supervised counterparts has been both widely observed and described \cite{Cozman2003}. We will generate an example where unlabeled data is helpful (using the 2ClassGaussian problem from \Cref{fig:generateddatasets}) and one where unlabeled data actually leads to an increase in the classification error (2ClassGaussian (alt) in \Cref{fig:generateddatasets}), for the least squares classifier and self-learning as the semi-supervised learner. This can be done using the following code:
+While semi-supervised learning may seem to be obviously helpful, the fact that semi-supervised methods can actually lead to worse performance than their supervised counterparts has been both widely observed and described \cite{Cozman2003}. We will generate an example where unlabeled data is helpful (using the 2ClassGaussian problem from \Cref{fig:generateddatasets}) and one where unlabeled data actually leads to an increase in the classification error (2ClassGaussian (alt) in \Cref{fig:generateddatasets}), for the least squares classifier and self-learning as the semi-supervised learner. This can be done using the following code:
 \begin{knitrout}\footnotesize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -421,7 +422,7 @@ A number of semi-supervised approaches attempt to leverage the assumption that t
 \begin{knitrout}\footnotesize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 \subfloat[Low-density assumption\label{fig:lowdensityproblem1}]{\includegraphics[width=.49\linewidth]{figure/lowdensityproblem-1} }
-\subfloat[Non low-density assumption\label{fig:lowdensityproblem2}]{\includegraphics[width=.49\linewidth]{figure/lowdensityproblem-2} }\caption[Demonstration of potential problems when the low density assumption does not hold, similar to Figure 6.5 in \cite{Zhu2009}]{Demonstration of potential problems when the low density assumption does not hold, similar to Figure 6.5 in \cite{Zhu2009}}\label{fig:lowdensityproblem}
+\subfloat[Non low-density assumption\label{fig:lowdensityproblem2}]{\includegraphics[width=.49\linewidth]{figure/lowdensityproblem-2} }\caption[Demonstration of potential problems when the low density assumption does not hold, similar to Figure 6.5 in \cite{Zhu2009}]{Demonstration of potential problems when the low density assumption does not hold, similar to Figure 6.5 in \cite{Zhu2009}.}\label{fig:lowdensityproblem}
 \end{figure}
 
 
@@ -460,7 +461,7 @@ We now return to the example of deterioration in performance from \Cref{fig:plot
 \section{Conclusion}
 We presented RSSL, a package containing implementations and interfaces to implementations of semi-supervised classifiers, and utility methods to carry out experiments using these methods. We demonstrated how the package can be used to replicate several results from the semi-supervised learning literature. More usage examples can be found in the package documentation. We hope the package inspires practitioners to consider semi-supervised learning in their work and we invite others to contribute to and use the package for research. Moreover, we hope the package contributes towards making semi-supervised learning research, and the research of those who use these methods in an applied setting, fully reproducible.
 
-\subsubsection*{Acknowledgement}
+\subsubsection*{Acknowledgements.}
 This work was funded by project P23 of the Dutch public/private research network COMMIT.
 
 \bibliographystyle{splncs03}
